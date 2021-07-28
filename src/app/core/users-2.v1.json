@@ -1,0 +1,453 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "users",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3101"
+    }
+  ],
+  "paths": {
+    "/users/{userId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "Id of an existing user."
+        }
+      ],
+      "get": {
+        "summary": "Get User Info by User ID",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "User Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "examples": {
+                  "Get User Alice Smith": {
+                    "value": {
+                      "id": 142,
+                      "firstName": "Alice",
+                      "lastName": "Smith",
+                      "email": "alice.smith@gmail.com",
+                      "dateOfBirth": "1997-10-31",
+                      "emailVerified": true,
+                      "signUpDate": "2019-08-24"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User Not Found"
+          }
+        },
+        "operationId": "get-users-userId",
+        "description": "Retrieve the information of the user with the matching user ID.",
+        "parameters": []
+      },
+      "patch": {
+        "summary": "Update User Information",
+        "operationId": "patch-users-userId",
+        "responses": {
+          "200": {
+            "description": "User Updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "examples": {
+                  "Updated User Rebecca Baker": {
+                    "value": {
+                      "id": 13,
+                      "firstName": "Rebecca",
+                      "lastName": "Baker",
+                      "email": "rebecca@gmail.com",
+                      "dateOfBirth": "1985-10-02",
+                      "emailVerified": false,
+                      "createDate": "2019-08-24"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User Not Found"
+          },
+          "409": {
+            "description": "Email Already Taken"
+          }
+        },
+        "description": "Update the infromation of an existing user.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "If a new email is given, the user's email verified property will be set to false."
+                  },
+                  "dateOfBirth": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "Update First Name": {
+                  "value": {
+                    "firstName": "Rebecca"
+                  }
+                },
+                "Update Email": {
+                  "value": {
+                    "email": "rebecca@gmail.com"
+                  }
+                },
+                "Update Last Name & Date of Birth": {
+                  "value": {
+                    "lastName": "Baker",
+                    "dateOfBirth": "1985-10-02"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Patch user properties to update."
+        }
+      },
+      "post": {
+        "summary": "",
+        "operationId": "post-users-userId",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {}
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "",
+        "operationId": "put-users-userId",
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "",
+        "operationId": "delete-users-userId",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Responce"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "options": {
+        "summary": "",
+        "operationId": "options-users-userId",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "object",
+                  "string"
+                ]
+              }
+            }
+          },
+          "description": ""
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "All users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "title": "User",
+                    "description": "",
+                    "x-examples": {
+                      "0": {
+                        "id": 0,
+                        "firstName": "Test",
+                        "lastName": "Test",
+                        "email": "Test@example.com",
+                        "dateOfBirth": "1997-10-31",
+                        "emailVerified": true,
+                        "createDate": "2019-08-24"
+                      },
+                      "1": {
+                        "id": 1,
+                        "firstName": "Fielding",
+                        "lastName": "Staniforth",
+                        "email": "fstaniforth0@comsenz.com",
+                        "dateOfBirth": "1999-11-30",
+                        "emailVerified": true,
+                        "createDate": "2019-08-24"
+                      },
+                      "2": {
+                        "id": 2,
+                        "firstName": "Marcy",
+                        "lastName": "Hawton",
+                        "email": "mhawton1@bigcartel.com",
+                        "dateOfBirth": "2007-10-31",
+                        "emailVerified": true,
+                        "createDate": "2019-08-24"
+                      },
+                      "3": {
+                        "id": 3,
+                        "firstName": "Aubrette",
+                        "lastName": "Griswood",
+                        "email": "agriswood2@sogou.com",
+                        "dateOfBirth": "2002-05-31",
+                        "emailVerified": true,
+                        "createDate": "2019-08-24"
+                      },
+                      "4": {
+                        "id": 4,
+                        "firstName": "Ruby",
+                        "lastName": "Bigglestone",
+                        "email": "rbigglestone3@spotify.com",
+                        "dateOfBirth": "1999-10-01",
+                        "emailVerified": true,
+                        "createDate": "2019-08-24"
+                      },
+                      "5": {
+                        "id": 5,
+                        "firstName": "string",
+                        "lastName": "string",
+                        "email": "user@example.com",
+                        "dateOfBirth": "1997-10-31",
+                        "emailVerified": true,
+                        "createDate": "2019-08-24"
+                      },
+                      "6": {
+                        "id": 142,
+                        "firstName": "Alice",
+                        "lastName": "Smith",
+                        "email": "alice.smith@gmail.com",
+                        "dateOfBirth": "1997-10-31",
+                        "emailVerified": true,
+                        "signUpDate": "2019-08-24"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "minProperties": 5,
+                    "maxProperties": 15,
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "description": "Unique identifier for the given user."
+                      },
+                      "firstName": {
+                        "type": "string"
+                      },
+                      "lastName": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string",
+                        "format": "email"
+                      },
+                      "dateOfBirth": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "1997-10-31"
+                      },
+                      "emailVerified": {
+                        "type": "boolean",
+                        "description": "Set to true if the user's email has been verified."
+                      },
+                      "createDate": {
+                        "type": "string",
+                        "format": "date",
+                        "description": "The date that the user was created."
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "firstName",
+                      "lastName",
+                      "email",
+                      "emailVerified"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-users"
+      },
+      "parameters": []
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "title": "User",
+        "description": "",
+        "x-examples": {},
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the given user."
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date",
+            "example": "1997-10-31"
+          },
+          "createDate": {
+            "type": "string",
+            "format": "date",
+            "description": "The date that the user was created."
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "email"
+        ]
+      },
+      "Responce": {
+        "type": "object",
+        "title": "Responce",
+        "minProperties": 2,
+        "maxProperties": 2,
+        "additionalProperties": false,
+        "properties": {
+          "icode": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20,
+            "readOnly": true
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "readOnly": true
+      }
+    },
+    "securitySchemes": {
+      "key": {
+        "name": "key",
+        "type": "apiKey",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "apiKey": []
+    }
+  ]
+}

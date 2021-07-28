@@ -1,0 +1,65 @@
+<div class="row">
+    <div class="col-md-12">
+        <form [formGroup]="mainForm" class="form">
+            <div class="card">
+                <div class="loading" *ngIf="isLoading">
+                    <mat-spinner diameter="50"></mat-spinner>
+                </div>
+
+                <div class="card-header">
+                    Edit User
+                </div>
+
+                <div class="card-body">
+                    <div class="alert alert-danger" *ngIf="error">
+                        {{error}}
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <mat-form-field appearance="fill" style="width: 450px;">
+                                <mat-label>Email</mat-label>
+                                <input matInput formControlName="Email" required>
+                            </mat-form-field>
+                        </div>
+                    
+                        <div class="col-md-12">
+                            <mat-form-field appearance="fill" style="width: 450px;">
+                                <mat-label>First Name</mat-label>
+                                <input matInput formControlName="FirstName" required>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-12">
+                            <mat-form-field appearance="fill" style="width: 450px;">
+                                <mat-label>Last Name</mat-label>
+                                <input matInput formControlName="LastName" required>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-12">
+                            <mat-form-field appearance="fill" style="width: 450px;">
+                                <mat-label>Date of birth</mat-label>
+                                <input matInput [matDatepicker]="picker" formControlName="DateOfBirth" required>
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button mat-raised-button type="submit" (click)="submit()" [disabled]="isLoading || mainForm.pristine" class="btn btn-success" style="margin-right: 10px;">
+                                Save
+                            </button>
+
+                            <button mat-button type="button" (click)="cancel()" class="btn btn-link">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

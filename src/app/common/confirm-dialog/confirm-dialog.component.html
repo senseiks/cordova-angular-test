@@ -1,0 +1,6 @@
+<h2 mat-dialog-title style="margin-bottom: 10px; text-align: center;">{{ data.title }}</h2>
+<mat-dialog-content *ngIf="data.content" style="text-align: center;">{{ data.content }}</mat-dialog-content>
+<mat-dialog-actions style="margin-top: 20px;">
+    <button mat-button class="mat-raised-button mat-warn" style="margin: 0 10px 10px 0; min-width: 150px; color: #ffffff !important;" [mat-dialog-close]="true">{{ data.trueButton }}</button>
+    <button mat-button class="btn btn-link" style="margin: 0 0 10px 0;" [mat-dialog-close]="false">{{ data.falseButton }}</button>
+</mat-dialog-actions>
