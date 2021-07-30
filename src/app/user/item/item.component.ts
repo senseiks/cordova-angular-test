@@ -72,7 +72,7 @@ export class ItemComponent implements OnInit {
         }
     }
 
-    submit() {
+    async submit() {
         if (!this.mainForm.valid) { 
             return; 
         }
@@ -87,7 +87,13 @@ export class ItemComponent implements OnInit {
             "DateOfCreate": this.mainForm.controls.DateOfRegistration.value
         };
 
-        if (this.isNewMode) {
+        let action = this.isNewMode ? 'addUser' : 'editUser';
+
+        await this.as[action](this, params);
+        this.isLoading = false;
+        this.cancel();
+        
+        /* if (this.isNewMode) {
             this.as.addUser(this, params).then(() => {
                 this.isLoading = false;
                 this.cancel();
@@ -97,7 +103,7 @@ export class ItemComponent implements OnInit {
                 this.isLoading = false;
                 this.cancel();
             });
-        }
+        } */
     }
 
     cancel() {

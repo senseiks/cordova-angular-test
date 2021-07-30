@@ -164,6 +164,7 @@ export class AppService {
     }
 
     async editUser(parent: any, params: {ID:number, Email:string, FirstName:string, LastName:string, DateOfBirth:string, DateOfCreate: string}) {
+        console.log(this);
         if (await this.checkConnection()) {
             await this.request(parent, METHOD.PUT, params);
         } else {
