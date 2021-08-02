@@ -293,9 +293,12 @@ export class AppService {
             CELL: "CELL",
             NONE: "NONE"
         };
-        var networkState = navigator.connection.type;
-        console.log(networkState);
-    
+
+        let networkState;
+        if (navigator && navigator.connection && (navigator.connection.type !== undefined)) {
+            networkState = navigator.connection.type;
+        }
+        
         /* var states = {};
         states[Connection.UNKNOWN]  = 'Unknown connection';
         states[Connection.ETHERNET] = 'Ethernet connection';
