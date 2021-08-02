@@ -54,48 +54,53 @@ export class AppService {
 
     async request(parent: any, method: string, params: any = null): Promise<any> {
         return new Promise(resolve => {
-            switch(method) {
-                case METHOD.GET: 
-                    this.http.get('https://api-mock.hwbe.io/testapp/userId').subscribe(res => {
-                        resolve(res);
-                    },
-                    err => {
-                        parent.error = err.message;
-                        resolve(false);
-                    });
-                    break;
-                
-                case METHOD.POST:
-                    this.http.post('https://api-mock.hwbe.io/testapp/userId', null, { params }).subscribe(res => {
-                        resolve(res);
-                    },
-                    err => {
-                        parent.error = err.message;
-                        resolve(false);
-                    });
-                    break;
+            resolve(false);
+            try {
+                switch(method) {
+                    case METHOD.GET: 
+                        this.http.get('https://api-mock.hwbe.io/testapp/userId').subscribe(res => {
+                            resolve(res);
+                        },
+                        err => {
+                            parent.error = err.message;
+                            resolve(false);
+                        });
+                        break;
+                    
+                    case METHOD.POST:
+                        this.http.post('https://api-mock.hwbe.io/testapp/userId', null, { params }).subscribe(res => {
+                            resolve(res);
+                        },
+                        err => {
+                            parent.error = err.message;
+                            resolve(false);
+                        });
+                        break;
+    
+                    case METHOD.PUT:
+                        this.http.put('https://api-mock.hwbe.io/testapp/userId', null, { params }).subscribe(res => {
+                            resolve(res);
+                        },
+                        err => {
+                            parent.error = err.message;
+                            resolve(false);
+                        });
+                        break;
+    
+                    case METHOD.DELETE:
+                        this.http.delete('https://api-mock.hwbe.io/testapp/userId', { params }).subscribe(res => {
+                            resolve(res);
+                        },
+                        err => {
+                            parent.error = err.message;
+                            resolve(false);
+                        });
+                        break;
 
-                case METHOD.PUT:
-                    this.http.put('https://api-mock.hwbe.io/testapp/userId', null, { params }).subscribe(res => {
-                        resolve(res);
-                    },
-                    err => {
-                        parent.error = err.message;
-                        resolve(false);
-                    });
-                    break;
-
-                case METHOD.DELETE:
-                    this.http.delete('https://api-mock.hwbe.io/testapp/userId', { params }).subscribe(res => {
-                        resolve(res);
-                    },
-                    err => {
-                        parent.error = err.message;
-                        resolve(false);
-                    });
-                    break;
-
-                default: resolve(false);
+                        default: resolve(false);
+                }
+            } catch (e) {
+                resolve(false);
             }
         })
 
@@ -139,13 +144,14 @@ export class AppService {
     }
 
     async addUser(parent: any, params: {ID:number, Email:string, FirstName:string, LastName:string, DateOfBirth:string}) {
-        let result, ID;
+        let result, ID = Number((Math.random() * 100).toFixed(0));
         if (await this.checkConnection()) {
             result = await this.request(parent, METHOD.POST, params);
-            ID = result['id'];
+            if (result && result['id']) {
+                ID = result['id'];
+            }
         } else {
             this.saveAction({operation: 'add', params});
-            ID = Number((Math.random() * 100).toFixed(0));
         }
 
         const user = {
